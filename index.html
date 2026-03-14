@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <title>HusanBarber Premium sartarosh – online navbat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-1: #0f0f12;
+            --bg-2: #141216;
+            --accent-1: #ff9800;
+            --accent-2: #ff5722;
+            --card: rgba(255, 255, 255, 0.03);
+            --muted: #a9a9a9;
+            --glass: rgba(255, 255, 255, 0.04);
+            --success: #43a047;
+            --danger: #c62828;
+            --gap: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background: radial-gradient(1200px 600px at 10% 10%, rgba(255, 87, 34, 0.05), transparent),
+                radial-gradient(900px 400px at 90% 90%, rgba(255, 152, 0, 0.03), transparent),
+                linear-gradient(180deg, var(--bg-1), var(--bg-2));
+            color: #fff;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            padding-bottom: 40px;
+        }
+
+        .olma {
+            font-size: 18px;
+        }
+
+        header {
+            background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+            padding: 26px 20px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 18px;
+            margin: 18px;
+            border-radius: 20px;
+        }
+
+        .logo {
+            font-size: 44px;
+            font-weight: bold;
+            letter-spacing: -0.5px;
+            text-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 18px auto;
+            padding: 22px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(2, 6, 23, 0.6);
+            backdrop-filter: blur(6px);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--gap);
+            margin-bottom: 22px;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 230px;
+            object-fit: cover;
+            border-radius: 14px;
+            transition: transform .35s cubic-bezier(.2, .9, .2, 1), box-shadow .35s;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), inset 0 -20px 60px rgba(0, 0, 0, 0.25);
+            transform-origin: center;
+        }
+
+        .gallery img:hover {
+            transform: translateY(-6px) scale(1.03);
+            box-shadow: 0 18px 48px rgba(0, 0, 0, 0.7);
+        }
+
+        h2 {
+            margin: 8px 0 12px 0;
+            font-size: 20px;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .status-btn {
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            background: linear-gradient(90deg, var(--success), #2e7d32);
+            color: white;
+            box-shadow: 0 10px 30px rgba(67, 160, 71, 0.18);
+            transition: transform .15s, box-shadow .15s, opacity .15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-btn.closed {
+            background: linear-gradient(90deg, var(--danger), #b71c1c);
+            box-shadow: 0 10px 30px rgba(198, 24, 24, 0.18);
+        }
+
+        .meta {
+            color: var(--muted);
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .time-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .time-btn {
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(180deg, #191919, #111111);
+            color: #eaeaea;
+            font-size: 19px;
+            cursor: pointer;
+            transition: transform .18s, box-shadow .18s, background .18s;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55), inset 0 -6px 18px rgba(255, 255, 255, 0.02);
+            text-align: center;
+        }
+
+        .time-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        .time-btn.band {
+            background: linear-gradient(180deg, #3a0e0e, #240606);
+            color: #ffd6d6;
+            text-decoration: line-through;
+            opacity: 0.95;
+            box-shadow: 0 6px 18px rgba(198, 0, 0, 0.22);
+        }
+
+        .time-btn.active {
+            background: linear-gradient(180deg, #43a047, #2e7d32);
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(67, 160, 71, 0.18);
+            transform: translateY(-6px) scale(1.02);
+        }
+
+        .time-btn[disabled] {
+            opacity: 0.45;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        form {
+            display: none;
+            margin-bottom: 20px;
+            background: var(--glass);
+            padding: 16px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55);
+            animation: slideIn .28s ease both;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 10px;
+            margin: 6px 0;
+            background: transparent;
+            color: #fff;
+            outline: none;
+            font-size: 15px;
+            transition: box-shadow .12s, border-color .12s;
+        }
+
+        input:focus {
+            border-color: rgba(255, 152, 0, 0.9);
+            box-shadow: 0 6px 24px rgba(255, 152, 0, 0.06);
+        }
+
+        .btn {
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform .12s;
+        }
+
+        .btn:active {
+            transform: translateY(1px)
+        }
+
+        .green {
+            background: linear-gradient(90deg, #43a047, #2e7d32);
+            color: white;
+        }
+
+        .danger {
+            background: linear-gradient(90deg, #c62828, #b71c1c);
+            color: white;
+        }
+
+        .list {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0.005));
+            padding: 16px;
+            border-radius: 12px;
+            margin-top: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .list h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .list ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            max-height: 220px;
+            overflow: auto;
+        }
+
+        .list li {
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), transparent);
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            font-size: 15px;
+        }
+
+        footer {
+            background: linear-gradient(180deg, #0e0e0e, #121212);
+            padding: 22px;
+            margin-top: 22px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        footer input {
+            width: 100%;
+            margin-bottom: 12px;
+            border-radius: 10px;
+            padding: 10px;
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .map {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0.002));
+            height: 200px;
+            border-radius: 12px;
+            margin-top: 10px;
+            text-align: center;
+            color: var(--muted);
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .map a {
+            color: var(--accent-1);
+            font-size: 18px;
+            text-decoration: none;
+            background: linear-gradient(90deg, rgba(255, 152, 0, 0.06), transparent);
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 152, 0, 0.06);
+        }
+
+        .contacts {
+            margin-top: 18px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), transparent);
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .contacts a {
+            display: block;
+            padding: 10px 0;
+            color: var(--accent-1);
+            font-size: 16px;
+            text-decoration: none;
+            transition: color .12s;
+        }
+
+        .contacts a:hover {
+            color: #ffd19a
+        }
+
+        .contacts span {
+            margin-right: 8px;
+        }
+
+        .toast {
+            position: fixed;
+            right: 18px;
+            bottom: 18px;
+            min-width: 220px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 12px 14px;
+            border-radius: 10px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity .25s, transform .25s;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        @media (max-width: 1024px) {
+            .gallery {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .time-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 12px !important;
+                margin: 12px;
+            }
+
+            .logo {
+                font-size: 26px !important;
+            }
+
+            .gallery {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 10px !important;
+            }
+
+            .gallery img {
+                height: 160px !important;
+                border-radius: 10px;
+            }
+
+            .time-grid {
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 8px !important;
+            }
+
+            .time-btn {
+                padding: 12px !important;
+                font-size: 15px !important;
+            }
+
+            h2 {
+                font-size: 16px !important;
+            }
+
+            input {
+                font-size: 15px !important;
+                padding: 10px !important;
+            }
+
+            .list h3 {
+                font-size: 17px !important;
+            }
+
+            footer h3 {
+                font-size: 18px !important;
+            }
+
+            .map {
+                height: auto !important;
+                padding: 15px !important;
+            }
+
+            .map a {
+                font-size: 16px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">✂️ HusanBarber</div>
+        <p class="olma">Premium sartarosh – online navbat</p>
+        <div id="clock" aria-live="polite" style="margin-top:8px;font-size:20px;color:rgba(255,255,255,0.9)"></div>
+    </header>
+
+    <div class="container" role="main">
+        <div class="gallery" aria-label="Sartarosh galereyasi">
+            <img src="https://www.hopculture.com/wp-content/uploads/2017/12/best-bars-2017-LEAD.jpg" alt="Sartarosh 1"
+                loading="lazy">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI06mWvtOctrM-xpDfzabLbhNKtpPS0wTUvQ&s"
+                alt="Sartarosh 2" loading="lazy">
+            <img src="https://i.pinimg.com/736x/dc/4f/8a/dc4f8acf1997c6e31a47cef099c564f6.jpg" alt="Sartarosh 3"
+                loading="lazy">
+            <img src="https://n1s1.hsmedia.ru/a7/96/4a/a7964a327542ac9dacf3f0807df66478/1426x1004_0xac120003_18206319701638266607.webp"
+                alt="Sartarosh 4" loading="lazy">
+        </div>
+
+        <div class="controls" aria-hidden="false">
+            <div style="text-align:center">
+                <button id="statusBtn" class="status-btn" aria-pressed="true" aria-label="Ish holati">Ishdaman</button>
+            </div>
+            <div class="meta" id="bookSummary" aria-live="polite">Bandlar: 0</div>
+        </div>
+
+        <h2>🕒 Vaqtni tanlang (band vaqtlarga bosish - bekor qilish)</h2>
+        <div class="time-grid" id="times" role="list"></div>
+
+        <form id="form" aria-label="Zakaz formasi">
+            <input id="name" placeholder="Ism" aria-label="Ism" required>
+            <input id="surname" placeholder="Familiya" aria-label="Familiya" required>
+            <input id="phone" placeholder="Telefon" aria-label="Telefon" required>
+            <button type="submit" class="btn green">Zakaz qilish</button>
+        </form>
+
+        <div class="list" aria-label="Band vaqtlar bo'limi">
+            <h3>📋 Band vaqtlar</h3>
+            <ul id="list"></ul>
+        </div>
+    </div>
+
+    <footer>
+        <h3>📍 Manzil</h3>
+        <input
+            value="Jizzax viloyati, Sharof Rashidov tumani, To‘qchiliq mahallasi, Talabalar ko‘chasi, Baraka magazin ro‘parasi"
+            readonly>
+        <div class="map">
+            <p>📌 Lokatsiyani ochish:</p>
+            <a href="https://maps.app.goo.gl/NjyrQ4okfvmGTBR28" target="_blank" rel="noopener">Google Maps orqali
+                ochish</a>
+        </div>
+
+        <div class="contacts">
+            <h3>✂️ Sartarosh bilan bog‘lanish</h3>
+            <a href="tel:+998901234567"><span>📞</span> Telefon: +998 99 565 90 70</a>
+
+        </div>
+    </footer>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+   
+
+    <script>
+let selectedTime = null;
+        let bookings = [];
+        let barberStatus = "open";
+
+        const API_URL = ""; // Agar frontend va backend bir joyda bo'lsa bo'sh qoladi
+
+        async function fetchData() {
+            try {
+                const res = await fetch(`${API_URL}/api/bookings`);
+                const data = await res.json();
+                bookings = data.bookings;
+                barberStatus = data.status;
+                render();
+                renderStatus();
+            } catch (e) {
+                showToast("Serverga ulanishda xato!");
+            }
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById("toast");
+            t.textContent = msg;
+            t.classList.add("show");
+            setTimeout(() => t.classList.remove("show"), 3000);
+        }
+
+        function renderStatus() {
+            const btn = document.getElementById("statusBtn");
+            if (barberStatus === "open") {
+                btn.innerText = "🟢 Ishdaman";
+                btn.classList.remove("closed");
+            } else {
+                btn.innerText = "🔴 Yopiq";
+                btn.classList.add("closed");
+            }
+        }
+
+        async function toggleStatus() {
+            const newStatus = barberStatus === "open" ? "closed" : "open";
+            const res = await fetch(`${API_URL}/api/status`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ status: newStatus })
+            });
+            if(res.ok) fetchData();
+        }
+
+        document.getElementById("statusBtn").onclick = toggleStatus;
+
+        function render() {
+            const grid = document.getElementById("times");
+            const listUl = document.getElementById("list");
+            grid.innerHTML = ""; listUl.innerHTML = "";
+            
+            document.getElementById("bookSummary").innerText = `Bandlar: ${bookings.length}`;
+
+            for (let h = 9; h <= 21; h++) {
+                for (let m of ["00", "30"]) {
+                    const t = `${h < 10 ? '0'+h : h}:${m}`;
+                    const btn = document.createElement("button");
+                    btn.className = "time-btn";
+                    btn.innerText = t;
+
+                    const isBooked = bookings.find(b => b.time === t);
+                    if (isBooked) {
+                        btn.classList.add("band");
+                        btn.onclick = () => deleteBooking(t);
+                    } else {
+                        btn.disabled = barberStatus === "closed";
+                        btn.onclick = () => {
+                            if (barberStatus === "closed") return;
+                            selectedTime = t;
+                            document.getElementById("selectedTimeText").innerText = t + " uchun ma'lumotlar";
+                            document.getElementById("form").style.display = "block";
+                            document.querySelectorAll(".time-btn").forEach(b => b.classList.remove("active"));
+                            btn.classList.add("active");
+                        };
+                    }
+                    grid.appendChild(btn);
+                }
+            }
+
+            bookings.forEach(b => {
+                const li = document.createElement("li");
+                li.innerHTML = `<b>${b.time}</b> - ${b.name} ${b.surname}`;
+                listUl.appendChild(li);
+            });
+        }
+
+        async function deleteBooking(time) {
+            if(confirm(time + " navbatini bekor qilasizmi?")) {
+                await fetch(`${API_URL}/api/bookings/${encodeURIComponent(time)}`, { method: 'DELETE' });
+                fetchData();
+            }
+        }
+
+        document.getElementById("form").onsubmit = async (e) => {
+            e.preventDefault();
+            const payload = {
+                time: selectedTime,
+                name: document.getElementById("name").value,
+                surname: document.getElementById("surname").value,
+                phone: document.getElementById("phone").value
+            };
+
+            const res = await fetch(`${API_URL}/api/bookings`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(payload)
+            });
+
+            if (res.ok) {
+                showToast("Muvaffaqiyatli band qilindi!");
+                document.getElementById("form").reset();
+                document.getElementById("form").style.display = "none";
+                fetchData();
+            } else {
+                const err = await res.json();
+                showToast(err.error || "Xatolik yuz berdi");
+            }
+        };
+
+        function updateClock() {
+            document.getElementById("clock").textContent = new Date().toLocaleTimeString("uz-UZ");
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+        fetchData(); // Sahifa ochilganda ma'lumotlarni olish
+     </script>  
+</body>
+
+</html>
