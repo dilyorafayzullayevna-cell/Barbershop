@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // BU YERGA O'ZINGIZNING MONGODB LINKINGIZNI QO'YISHINGIZ KERAK
-const MONGO_URI = process.env.MONGO_URI || "mongodb+srv://dilyorafayzullayevna_db_user:PAROLINGIZ@barbershop.lwnto0d.mongodb.net/husanbarber?retryWrites=true&w=majority&appName=barbershop/husanbarber";
+const MONGO_URI = process.env.MONGO_URI || "mongodb+srv://dilyorafayzullayevna_db_user:0.0.0.0/0@barbershop.lwnto0d.mongodb.net/?appName=barbershop";
 const DB_NAME = "husanbarber";
 
 let db;
